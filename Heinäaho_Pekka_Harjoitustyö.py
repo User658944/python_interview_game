@@ -31,19 +31,26 @@ class paikka:
         self.itemit.remove(item)
 
     def tulosta_paikka(self):
-        tulosta_hitaasti(f'\nOlet paikassa {self.nimi}.', viive=0.02)
+        tulosta_hitaasti(f'\nOlet paikassa {self.nimi}.\n', viive=0.02)
 
     def katsele_paikka(self):
-        print(f'{self.kuvaus}\nOvi on {self.ovi}. Tutkittuasi paikat, löydät:')
+        if self.nimi == 'aula':
+            print(f'{self.kuvaus}\nTutkittuasi paikat, löydät:')
+        elif self.nimi == 'eteinen':
+            print(f'{self.kuvaus}\nOvi ulos on {self.ovi}. Tutkittuasi paikat, löydät vartijan pöydältä:')
+        else:
+            print(f'{self.kuvaus}\nOvi on {self.ovi}. Tutkittuasi paikat, löydät:')
         if not self.itemit:
             print('et mitään...')
         else:
             tulosta_huoneen_itemit(self.itemit)
 
-
 # kerros 1
 ulkona = paikka('ulkona', 'Ulkona on raikas aamuilma.', 'kiinni', False)
-eteinen = paikka('eteinen', 'Vartija lukee lehteä työpisteellään. \nEteisestä on ovi ulos, pohjoisessa on kulku käytävälle ja sivulla portaat ylös.', 'kiinni', False)
+eteinen = paikka('eteinen', 'Vartija lukee lehteä työpisteellään. \nEteisestä on ovi ulos, pohjoisessa on kulku käytävälle ja sivulla portaat ylös sekä idässä näkyy aula.', 'kiinni', False)
+eteinen.itemit = ['kolikko']
+aula = paikka('aula', 'Lännessä on eteinen. Aulassa on iso divaanisohva ja kaksi isoa nojatuolta. Seinällä on tv sekä taideteos, jossa lukee "Unet päivässä pitää lääkarin loitolla". Alat myös itsekin tuntea hieman väsymystä.', 'auki', False)
+aula.itemit = ['unet', 'sohvatyyny', 'kaukosäädin']
 kaytava1_kahvio = paikka('kahvion ovi', 'Kahvion ovessa on ikkuna. Kahviossa näkyy olevat valot päällä. Käytävä jatkuu pohjoiseen ja etelässä on eteinen.', 'kiinni', False)
 kahvio = paikka('kahvio', 'Kahviossa ei ole ketään. Seinällä on kello ja sen vieressä tulletusikkuna, josta tulee raikasta aamuilmaa sisälle.', 'kiinni', False)
 kahvio.itemit = ['kahvinkeitin', 'pullapitko', 'seinäkello']
@@ -54,14 +61,14 @@ kaytava1_kokoushuone = paikka('kokoushuoneen ovi', 'Ovessa lukee "Kokoushuone". 
 kokoushuone = paikka('kokoushuone', 'Johtaja istuu pöydän takana ja nostaa katseensa sinuun.', 'kiinni', False)
 kokoushuone.itemit = ['työsopimus']
 kaytava1_toimisto = paikka('toimiston ovi', 'Toimiston ovi on auki ja toimistossa näkyy pöydän takana istuvan sihteeri.', 'auki', False)
-toimisto = paikka('toimisto', 'Toimistossa istuu sihteeri.\n\nSihteeri: "Johtaja odottaa sinua kokoushuoneessa"\n', 'auki', False)
+toimisto = paikka('toimisto', 'Toimistossa istuu sihteeri.\n"Johtaja odottaa sinua kokoushuoneessa"\n', 'auki', False)
 toimisto.itemit = ['henkilökortti-vierailija']
 # kerros 2
 kaytava2_sahkohuone = paikka('sähköhuoneen ovi', 'Näet oven, jossa lukee "Sähköpääkeskus". Pohjoisessa on käytävä ja sivulla portaat alas.', 'kiinni', False)
 sahkohuone = paikka('sähköhuone', 'Huoneessa on iso sähkökaappi, jossa on sähkötaulu johdonsuojakytkimineen.', 'kiinni', False)
 sahkohuone.itemit = ['ruuvimeisseli']
 kaytava2_talonmies = paikka('talonmiehen huoneen ovi', 'Huoneen ovi on auki ja kuulet jonkun hyräilevät huoneessa. Käytävä jatkuu pohjoiseen ja etelään.', 'auki', False)
-talonmies = paikka('talonmiehen huone', 'Talomies on työntouhussa korjaamassa rikkimennyttä laitetta. Astuttuasi huoneeseen talonmies hymyilee sinulle.', 'auki', False)
+talonmies = paikka('talonmiehen huone', 'Talonmies on työntouhussa korjaamassa rikkimennyttä laitetta. Astuttuasi huoneeseen talonmies hymyilee sinulle.', 'auki', False)
 talonmies.itemit = ['avain']
 kaytava2_palvelinsali = paikka('palvelinsalin ovi', 'Näet oven, jossa lukee "Palvelinsali - Pääsy Kielletty!". käytävä jatkuu pohjoiseen ja etelään.', 'kiinni', False)
 palvelinsali = paikka('palvelinsali', 'Palvelinsalissa hyrrää palvelikoneet, pienet ledivalot vilkkuvat laitteissa ja piuhat ovat siististi niputetut.', 'kiinni', False)
@@ -72,13 +79,14 @@ siivouskomero.itemit = ['harja', 'puhdistusliinoja']
 kaytava2_tyohuone = paikka('tyohuoneen ovi', 'Näet ovessa lukevan "Työhuone". Käytävä jatkuu pohjoiseen ja etelään.', 'kiinni', False)
 tyohuone = paikka('tyohuone 3', 'Saavut huoneeseen ja huomaat, että ikkuna on jäänyt auki. Huone on todella kylmä yöllisen hallan vuoksi.', 'kiinni', False)
 tyohuone.itemit = ['kynä', 'henkilökortti-keijo']
-kaytava2_veijo = paikka('Veijon huoneen ovi', 'Ovella kuulet sisältä ääniä. Olet käytävän päässä. Käytävä jatkuu etelään.', 'kiinni', False)
-veijo = paikka('Veijon huone', 'Näet miehen ahkeroimassa läppärillään. Mies huomaa sinut ja toivottaa hyvät huomenet.', 'kiinni', False)
-veijo.itemit = ['Veijon lompakko']
+kaytava2_veijo = paikka('Veijon huoneen ovi', 'Olet käytävän päässä. Käytävä jatkuu etelään.', 'lukossa', False)
+veijo = paikka('Veijon huone', 'Veijon ahkeroi läppärillään. Veijo kiittää sinua avusta ja jatkaa töitään.', 'lukossa', False)
+veijo.itemit = ['lompakko']
 
 # paikannus
 ulkona.location = [1,1,1]
 eteinen.location = [2,1,1]
+aula.location = [3,1,1]
 kaytava1_kahvio.location = [2,2,1]
 kahvio.location = [1,2,1]
 kaytava1_varasto.location = [2,3,1]
@@ -100,7 +108,7 @@ tyohuone.location = [1,5,2]
 kaytava2_veijo.location = [2,6,2]
 veijo.location = [1,6,2]
 
-kaikki_paikat = [ulkona, eteinen, kaytava1_kahvio, kahvio, kaytava1_varasto, varasto, kaytava1_kokoushuone, kokoushuone, kaytava1_toimisto, toimisto, kaytava2_sahkohuone, sahkohuone, kaytava2_talonmies, talonmies, kaytava2_palvelinsali, palvelinsali, kaytava2_siivouskomero, siivouskomero, kaytava2_tyohuone, tyohuone, kaytava2_veijo, veijo]
+kaikki_paikat = [ulkona, eteinen, aula, kaytava1_kahvio, kahvio, kaytava1_varasto, varasto, kaytava1_kokoushuone, kokoushuone, kaytava1_toimisto, toimisto, kaytava2_sahkohuone, sahkohuone, kaytava2_talonmies, talonmies, kaytava2_palvelinsali, palvelinsali, kaytava2_siivouskomero, siivouskomero, kaytava2_tyohuone, tyohuone, kaytava2_veijo, veijo]
 
 
 pelin_nimi = 'PAIKKA ON TEIDÄN!'
@@ -140,17 +148,22 @@ def tulosta_apua():
     print(f"{'| lopeta':<55}{'|'}")
     print(f"{'| katsele':<55}{'|'}")
     print(f"{'| mukana':<55}{'|'}")
-    print(f"{'| hymyile (jollekin)':<55}{'|'}")
-    print(f"{'| kiitä (jotain)':<55}{'|'}")
+    print(f"{'| hymyile':<55}{'|'}")
+    print(f"{'| kiitä':<55}{'|'}")
     print(f"{'| avaa ovi':<55}{'|'}")
+    print(f"{'| avaa tv':<55}{'|'}")
     print(f"{'| mene ovesta/ovi/sisään':<55}{'|'}")
     print(f"{'| mene pohjoiseen/poh/p':<55}{'|'}")
     print(f"{'| mene etelään/ete/e':<55}{'|'}")
+    print(f"{'| mene itään/itä/i':<55}{'|'}")
+    print(f"{'| mene länteen/län/l':<55}{'|'}")
     print(f"{'| mene ylös/y':<55}{'|'}")
     print(f"{'| mene alas/a':<55}{'|'}")
     print(f"{'| ota (esine)':<55}{'|'}")
     print(f"{'| pudota (esine)':<55}{'|'}")
+    print(f"{'| piilota (esine)':<55}{'|'}")
     print(f"{'| näytä pisteet':<55}{'|'}")
+    print(f"{'| näytä kartta':<55}{'|'}")
     print(f"{'| katso kello/kelloa':<55}{'|'}")
     print(f"{'| keitä kahvit/kahvia/sumpit/kahvi':<55}{'|'}")
     print(f"{'| juo kahvit/kahvia/sumpit/kahvi':<55}{'|'}")
@@ -161,6 +174,20 @@ def tulosta_apua():
     print(f"{'| pyytämät asiat.':<55}{'|'}")
     print(f"{'|':<55}{'|'}")
     print('_'*57)
+
+def nayta_kartta():
+    print()
+    print(f'1krs    2krs')
+    print(f'         X X')
+    print(f'X X      X X')
+    print(f'X X      X X')
+    print(f'X X      X X')
+    print(f'X X      X X')
+    print(f'X X X    X X')
+    print(f'  ^')
+    print(f'  |')
+    print(f'  eteinen')
+    print()
 
 def kaatuminen_eteisessa():
     tulosta_hitaasti('Avatessasi oven ja astuessasi sisään, tuuli tempaisee oven sepposen selälleen, salkkusi aukeaa ja salkussasi olevat dokumentit lentävät eteisaulan lattialle. Talon vartija auttaa sinua keräämään dokumenttisi ja ojentaa ne takaisin sinulle.', viive=0.02)
@@ -174,6 +201,35 @@ def vartija_ohjaa_paikkaan_aula1():
 
 def ovi_lukossa():
     print('Ovi on lukossa')
+
+def ottaa_unet():
+    tulosta_hitaasti('Oikaiset itsesi hetkeksi mukavalle sohvalle ja torkahdat viideksi minuutiksi...\n', viive=0.02)
+    tulosta_hitaasti('...z...z...z...\n\n', viive=0.1)
+    time.sleep(0.7)
+    tulosta_hitaasti('Heräät ja huomaat että torkahdit!\n', viive=0.02)
+    print(f'Kello näyttää {aika}')
+    tulosta_hitaasti('Nyt on kiire!\n', viive=0.02)
+
+def lompakko_vietiin():
+    tulosta_hitaasti('"Hei! Veitkö lompakkoni?!?!"\nHuutaa Veijo perääsi.\n', viive=0.02)
+    tulosta_hitaasti('...voi...ei...\n\n', viive=0.1)
+    time.sleep(0.7)
+    tulosta_hitaasti('Veijo hakee vartijan ja sinut saatetaan ulos talosta...\n', viive=0.02)
+    game_over_teksti()
+
+def epaselva():
+    print('Epäselvä komento')
+
+def avaa_tv():
+    if 'kaukosäädin' in aula.itemit or 'kaukosäädin' in salkku:
+        tulosta_hitaasti('TV:stä tulee aamu-uutiset, joissa on aiheena ICT-alan työllisyystilanne. Toimittaja lukee uutisia:\n', viive=0.02)
+        time.sleep(0.7)
+        tulosta_hitaasti('"Vain seniori tason paikkoja tuntuu olevan tarjolla tällä hetkellä ICT-alalla.\n', viive=0.02)
+        tulosta_hitaasti('Ehdoton suositus on olla valmiina heti, jos töitä tarjotaan. Ja kuten aina, muistakaa hymyillä toisillenne!......"\n', viive=0.02)
+        time.sleep(0.7)
+        tulosta_hitaasti('\nSuljet TV:n ja aiot itsekin olla juuri tänään skarppina!\n', viive=0.02)
+    else:
+        tulosta_hitaasti('Et löydä kaukosäädintä\n', viive=0.02)
 
 def kahvin_keitto():
     tulosta_hitaasti('Kahvipannu tiputtaa kahvia...\n', viive=0.02)
@@ -194,7 +250,7 @@ def juo_kahvi():
     print('Juot kahvin ja olosi piristyy!')
 
 def sihteeri_kysyy():
-    tulosta_hitaasti('"Onhan sinulla ansioluettelosi mukana? Jos ei ole, niin sinun pitää hakea se."\n', viive=0.02)    
+    tulosta_hitaasti('Toimistossa istuva sihteeri sanoo sinulle:\n"Onhan sinulla ansioluettelosi mukana? Jos ei ole, niin sinun pitää hakea se."\n', viive=0.02)    
 
 def sihteerin_soitto(p):     
     tulosta_hitaasti('Johtajan pöydällä oleva puhelin soi.\n', viive=0.02)
@@ -285,7 +341,10 @@ while komento != 'lopeta':
 
         # ota komennot
         if komento.split()[0] == 'ota':
-            if komento.split()[1] in sijainti.itemit:
+            if komento.split()[1] == 'unet' and sijainti == aula:
+                aika += (minuutti * 5)
+                ottaa_unet()
+            elif komento.split()[1] in sijainti.itemit:
                 sijainti.itemit.remove(komento.split()[1])
                 salkku.append(komento.split()[1])
                 print(f'{komento.split()[1]} on nyt mukanasi.')
@@ -293,7 +352,7 @@ while komento != 'lopeta':
                 print(f'Esinettä {komento.split()[1]} ei ole')
 
         # pudota komennot
-        if komento.split()[0] == 'pudota':
+        elif komento.split()[0] == 'pudota':
             if komento.split()[1] in salkku:
                 salkku.remove(komento.split()[1])
                 sijainti.itemit.append(komento.split()[1])
@@ -301,41 +360,66 @@ while komento != 'lopeta':
             else:
                 print(f'Esinettä {komento.split()[1]} ei ole mukanasi')
 
-        # näytä pisteet
-        if komento == 'näytä pisteet':
-            print(kokonais_pisteet())
+        # piilota komennot
+        elif komento.split()[0] == 'piilota':
+            if komento.split()[1] in salkku:
+                salkku.remove(komento.split()[1])
+                eteinen.itemit.append(komento.split()[1])
+                print(f'Piilotit: {komento.split()[1]}.')
+            else:
+                print(f'Esinettä {komento.split()[1]} ei ole mukanasi')
+
+        # näytä komennot
+        elif komento.split()[0] == 'näytä':
+            if komento.split()[1] == 'pisteet':
+                print(kokonais_pisteet())
+            elif komento.split()[1] == 'kartta':
+                nayta_kartta()
+            else:
+                epaselva()
 
         # avaa komennot
-        if komento.split()[0] == 'avaa':
-            if komento.split()[1] in ['ovi']:
+        elif komento.split()[0] == 'avaa':
+            if komento.split()[1] == 'ovi':
                 if sijainti.ovi == 'kiinni':
                     sijainti.ovi = 'auki'
                     print('Ovi aukeaa')
-                else:
+                elif sijainti.ovi == 'auki':
                     print('Ovi on jo auki')
+                else:
+                    print('Ovi on lukossa')
+            elif komento.split()[1] == 'tv':
+                if sijainti == aula:
+                    avaa_tv()
+                else:
+                    print('Et löydä TV:tä täältä')
+            else:
+                epaselva()
 
         # mene komennot
-        if komento.split()[0] == 'mene':
+        elif komento.split()[0] == 'mene':
             if komento.split()[1] in ['ovesta', 'ovi', 'sisään']:
                 if sijainti.ovi == 'kiinni':
                     print('Ovi on kiinni')                    
                 else:
-                    # tarkistetaan ensin kuljetaanko ulko-ovesta sisälle tai ulos                    
+                    # tarkistetaan sijainnista lähtö-triggerit                    
                     if sijainti == eteinen:
                         if onko_cv() == False:
                             poistutko()
                             salkku.append('ansioluettelo')
                         vartija_ohjaa_paikkaan_aula1()
                         sijainti = kaytava1_kahvio
+                    elif sijainti == veijo and 'lompakko' in salkku:
+                        lompakko_vietiin()
                     else:
-                        if sijainti == ulkona:              
+                        if sijainti == ulkona:
                             kaatuminen_eteisessa()
                         if sijainti.location[0] == 2:
                             sijainti = paivita_sijainti([1,sijainti.location[1],sijainti.location[2]])                        
                         else:
                             sijainti = paivita_sijainti([2,sijainti.location[1],sijainti.location[2]])
                             
-                    # huoneiden triggerit
+                    # huoneiden saapumis triggerit
                     if sijainti == toimisto:
                         if onko_cv() == False:
                             sihteeri_kysyy()
@@ -424,13 +508,34 @@ while komento != 'lopeta':
                     sijainti = paivita_sijainti([sijainti.location[0],sijainti.location[1]+1,sijainti.location[2]])                       
                     sijainti.tulosta_paikka()
                 else:
-                    print('Et pääse pohjoisemmaksi')
+                    print('Et pääse pohjoiseen päin')
+                if sijainti == kaytava2_veijo and sijainti.ovi == 'lukossa':
+                    tulosta_hitaasti('\nOvessa lukee Veijo.\nNäet miehen, joka on selvästikin on hukannut jotain.\n', viive=0.02)
+                    if 'avain' in salkku:
+                        tulosta_hitaasti('Talonmieheltä löytämäsi avain sopii Veijon oveen. Veijo iloitsee avustasi ja pääsee työhuoneeseensa.\n', viive=0.02)
+                        pisteet += 100
+                        salkku.remove('avain')
+                        sijainti.ovi = 'auki'
+                    else:
+                        tulosta_hitaasti('Veijo etsii taskujaan ja mutisee, mihin on hukannut avaimensa...\n', viive=0.02)
             elif komento.split()[1] in ['etelään', 'ete', 'e']:
                 if sijainti.location[1] > 1 and sijainti.location[0] != 1:
                     sijainti = paivita_sijainti([sijainti.location[0],sijainti.location[1]-1,sijainti.location[2]])
                     sijainti.tulosta_paikka()
                 else:
-                    print('Et pääse etelämmäksi')
+                    print('Et pääse etelään päin')
+            elif komento.split()[1] in ['itään', 'itä', 'i']:
+                if sijainti == eteinen:
+                    sijainti = paivita_sijainti([sijainti.location[0]+1,sijainti.location[1],sijainti.location[2]])
+                    sijainti.tulosta_paikka()
+                else:
+                    print('Et pääse itään')
+            elif komento.split()[1] in ['länteen', 'län', 'l']:
+                if sijainti == aula:
+                    sijainti = paivita_sijainti([sijainti.location[0]-1,sijainti.location[1],sijainti.location[2]])
+                    sijainti.tulosta_paikka()
+                else:
+                    print('Et pääse länteen')
             elif komento.split()[1] in ['ylös', 'y'] and (sijainti == eteinen or sijainti == kaytava2_sahkohuone):
                 if sijainti.location[2]== 1:
                     print('Saavut toiseen kerrokseen')
@@ -447,44 +552,56 @@ while komento != 'lopeta':
                     aika+= minuutti
                 else:
                     print('Et pääse alemmas')
+            else:
+                epaselva()
                         
         # katso komennot
-        if komento.split()[0] == 'katso':
+        elif komento.split()[0] == 'katso':
             if komento.split()[1] in['kello', 'kelloa']:
                 print(f'Kello näyttää {aika}')
-
-        # ele komennot
-        if komento.split()[0] in ['hymyile', 'kiitä']:
-            if sijainti in [eteinen, toimisto, veijo, talonmies]:
-                sijainti.kohteliaisuus_annettu = True
-                print('Saat vastaukseksi hymyn! =)')
+            else:
+                epaselva()
 
         # keitä kahvi
-        if komento.split()[0] == 'keitä':
+        elif komento.split()[0] == 'keitä':
             if komento.split()[1] in ['kahvit', 'kahvia', 'sumpit', 'kahvi']:
                 if sijainti == kahvio:
                         kahvin_keitto()
                         pisteet += 100
                         kahvi_keitetty = True
+            else:
+                epaselva()
 
         # juo kahvi
-        if komento.split()[0] == 'juo':
+        elif komento.split()[0] == 'juo':
             if komento.split()[1] in ['kahvit', 'kahvia', 'sumpit', 'kahvi']:
-                if sijainti == kahvio:
+                if sijainti == kahvio and kahvi_keitetty == True:
                         juo_kahvi()
+            else:
+                epaselva()               
+        else:
+            epaselva()
         
     elif len(komento.split()) == 1:
         if komento == 'katsele':
             sijainti.katsele_paikka()
-        if komento == 'mukana':
+        elif komento == 'mukana':
             print()
             for i in salkku:
                 print(f' * {i}')
-        if komento == 'help' or komento == 'apua':
+        elif komento == 'help' or komento == 'apua':
             tulosta_apua()
+        elif komento in ['hymyile', 'kiitä']:
+            if sijainti in [eteinen, toimisto, veijo, talonmies]:
+                sijainti.kohteliaisuus_annettu = True
+                print('Saat vastaukseksi hymyn! =)')
+        else:
+            epaselva()
+    else:
+        epaselva()
             
     # print(f'{sijainti.location} - {sijainti.nimi}')
-    print('\n')
+    # print('\n')
     print('_'*57)
     komento = input('> ')
 
