@@ -106,9 +106,7 @@ kaikki_paikat = [ulkona, eteinen, aula, kaytava1_kahvio, kahvio, kaytava1_varast
 
 pelin_nimi = 'PAIKKA ON TEIDÄN!'
 sijainti = ulkona
-# pisteet = 0
 pelaaja = {'nimi': 'nimetön', 'pisteet': 0, 'salkku': ['ansioluettelo', 'tutkintotodistus', 'läppäri']}
-# salkku = ['ansioluettelo', 'tutkintotodistus', 'läppäri']
 aika = datetime(2025, 11, 4, 9, 49)
 tapaaminen_aika = datetime(2025, 11, 4, 10, 00)
 minuutti = timedelta(minutes=1)
@@ -471,7 +469,7 @@ while komento != 'lopeta':
                                 tulosta_hitaasti('Johtaja kysyy ensimmäisenä onko sinulla ansioluettelo mukana?\nKatsot salkustasi, eikä sitä ole siellä.\n\nJohtaja: "Palaa hakemaan se!"\n\nJohtaja ohjaa sinut takaisin käytävälle.\n', viive=0.02)
                             elif aika <= tapaaminen_aika:
                                 pelaaja['pisteet'] += 100
-                                tulosta_hitaasti('Johtaja: "Olen odottanut sinua. Saavuit ajoissa paikalle. Olet täsmällinen kaveri!"\n', viive=0.02)
+                                tulosta_hitaasti(f'Johtaja: "Olen odottanut sinua {pelaaja["nimi"]}. Saavuit ajoissa paikalle. Olet täsmällinen kaveri!"\n', viive=0.02)
                             elif aika > tapaaminen_aika:
                                 pelaaja['pisteet'] -= 200
                                 tulosta_hitaasti(f'Johtaja: "Olen odottanut sinua {pelaaja["nimi"]}. Olet myöhässä. Yhtiössämme täsmällisyys on ensisijaisen tärkeää."\n', viive=0.02)
